@@ -1,0 +1,63 @@
+# Four AI roles (adjustment #6, with one change: the live "independent evaluator"
+# became the offline eval harness, and the regulator role stays because the
+# official rules list "Institutional participant - e.g. regulator").
+# Neighbour and repair-vessel messages are scripted event sources, not agents.
+version: roles-0.3
+turn_order: [operator, service, regulator, adviser]
+
+roles:
+  operator:
+    title: "Network operations centre (fictional licensed operator)"
+    mandate: >
+      Runs its own simulated network. May re-route traffic and apply quality-of-service
+      inside its own network. Reports outages to the regulator role. Has no authority over
+      government services or other operators.
+    sees: [links, capacity, traffic]
+    tools: [reroute_traffic, apply_operator_qos, send_message]
+    kb_scope: {jurisdiction: [UAE, International], topics: [telecom, resilience, continuity],
+               query_terms: "telecommunications outage restoration priority submarine cable repair critical infrastructure"}
+
+  service:
+    title: "Operations lead of a synthetic government AI service"
+    mandate: >
+      Keeps the synthetic residency-renewal service running. May change service mode,
+      switch the model endpoint, or propose moving case files. Must not assume a transfer
+      is lawful; every transfer goes through the authority gate.
+    sees: [service, service_traffic, endpoints, record_sets]
+    tools: [set_service_mode, switch_ai_endpoint, transfer_records, send_message]
+    kb_scope: {jurisdiction: [UAE, International], topics: [data, cloud, digital_government, ai_governance],
+               query_terms: "government data cloud location sovereignty encryption keys personal data transfer outside UAE classification"}
+
+  regulator:
+    title: "Regulator role (telecom and digital government)"
+    mandate: >
+      Plays a regulator inside an exercise. Its powers are limited to those found in the
+      knowledge base. It may request information and make non-binding recommendations.
+      It must not issue real orders or claim to speak for any real authority.
+    sees: [demand_classes]          # names of traffic classes only; no live network data
+    tools: [request_information, recommend_priority_plan, issue_priority_order, send_message]
+    kb_scope: {jurisdiction: [UAE, International], topics: [telecom, resilience, continuity, digital_government],
+               query_terms: "regulator powers priority restoration emergency telecommunications coordination"}
+
+  adviser:
+    title: "Policy and legal adviser"
+    mandate: >
+      Answers questions from the other roles with clause-level citations, separates binding
+      law, policy, guidance and unknowns, and drafts gap observations in qualified wording.
+      Takes no operational action.
+    sees: []
+    tools: [send_message, record_gap_observation]
+    kb_scope: {jurisdiction: [UAE, International], topics: [],   # empty = all topics
+               query_terms: "law policy obligation applies scope exception"}
+
+tools:
+  reroute_traffic:          {args: {note: "free text"}, desc: "Re-route traffic inside your own simulated network."}
+  apply_operator_qos:       {args: {order: "list of demand class ids, highest first"}, desc: "Propose quality-of-service order inside your own network."}
+  set_service_mode:         {args: {mode: "full | reduced | manual_queue | offline"}, desc: "Change the service operating mode."}
+  switch_ai_endpoint:       {args: {region: "uae_central | eu_west | asia_south"}, desc: "Point the service at a model endpoint in another region."}
+  transfer_records:         {args: {record_set: "record set id", dest_region: "region id"}, desc: "Copy a record set to another region (simulated)."}
+  request_information:      {args: {to: "role id", question: "text"}, desc: "Ask another role for information."}
+  recommend_priority_plan:  {args: {order: "list of demand class ids, highest first", rationale: "text"}, desc: "Make a NON-BINDING priority recommendation."}
+  issue_priority_order:     {args: {order: "list of demand class ids, highest first"}, desc: "Propose a binding national priority order (will be escalated)."}
+  send_message:             {args: {to: "role id or ALL", text: "text"}, desc: "Send a message to another role."}
+  record_gap_observation:   {args: {gap_id: "id from the gap register", wording: "qualified wording", status: "hypothesis | supported | not_supported"}, desc: "Record a draft policy-gap observation for human review."}

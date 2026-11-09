@@ -1,0 +1,310 @@
+# LinkDown source register (G0-E). One entry per document.
+#
+# verification:
+#   primary_verified  - we opened the primary text and checked the clause we rely on
+#   primary_extracted - verbatim clauses machine-cut from the official file are in the KB
+#                       (kb/curated/clauses.yaml); the two-person check is still pending
+#   primary_partial   - primary text opened, but the clause we need is not yet located
+#   official_summary  - an official government page summarises it; full text not checked
+#   secondary_only    - only law-firm or press summaries so far
+#   pending           - identified, not yet opened
+# The gate (config/rules.yaml) only hard-prohibits on primary_verified clauses.
+# url_checked: false marks links we have not opened ourselves yet.
+#
+# licence: "link_and_excerpt" means no redistribution licence was found; the public
+# knowledge base stores the URL, metadata and short excerpts, not the full file.
+version: sources-0.2
+checked_on: 2026-10-24
+
+sources:
+  # ---------------- UAE ----------------
+  - id: uae-ncsp-v2-2025
+    title: "National Cloud Security Policy, Version 2.0"
+    issuer: "UAE Cyber Security Council"
+    jurisdiction: UAE
+    instrument_type: policy
+    version_date: 2025-09-17          # 'Issued Date' on the UAE legislation portal
+    url: "https://csc.gov.ae/documents/38662/489552/National+Cloud+Security+Policy_V2.0.pdf/baaac57a-6276-9588-409a-8059b8f7cb3a?t=1758541950254"
+    portal_url: "https://uaelegislation.gov.ae/en/policy/details/lsy-s-lotny-llamn-lsh-by"   # URL from the team's revision pack
+    secondary: "https://www.tamimi.com/law-update/the-technology-issue-2026/articles/new-data-sovereignty-rules-for-cloud-consumers-and-providers-in-the-uae/"
+    auto_fetch: false                 # site disallows automated fetching; download by hand
+    local_file: uae-ncsp-v2-2025.pdf
+    licence: link_and_excerpt
+    topics: [cloud, data, digital_government, resilience]
+    verification: official_summary
+    notes: "Portal confirms issuer, 17 Sep 2025 and scope (ministries, federal authorities, non-government CII; emirate entities via CIIP lead). Tier wording (baseline / partial sovereign / sovereign; keys in UAE) is from Al Tamimi. TODO: open PDF, record clause numbers, then set rules to primary_verified."
+
+  - id: uae-ncsp-summary-legportal
+    title: "National Cloud Security Policy: public policy page"
+    issuer: "UAE Legislation portal (uaelegislation.gov.ae)"
+    jurisdiction: UAE
+    instrument_type: official_summary   # a government web page describing the policy, not the policy text
+    version_date: "page copied 2026-10-24 (no update date shown)"
+    url: "https://uaelegislation.gov.ae/en/policy/details/national-cloud-security-policy"
+    url_checked: true                   # the team copied the page text on 24 Oct 2026
+    auto_fetch: false
+    licence: link_and_excerpt
+    topics: [cloud, data, digital_government]
+    verification: official_summary
+    file: "team copy NCSP_official_summary_uaelegislation.md, sha256 d66484648af6276e111bb61e032e47664cb1815f5481db251a6147b526098efa"
+    notes: "Verbatim target audience (incl. emirate-level government entities where there is no Emirate CIIP Program) and the key-component list. Names the domain 'Data Localization and Sovereignty'. Holds no tier or key-custody clause."
+
+  - id: uae-ncsp-summary-uae
+    title: "National Cloud Security Policy: page on the UAE government portal"
+    issuer: "UAE Government portal (u.ae)"
+    jurisdiction: UAE
+    instrument_type: official_summary
+    version_date: 2026-06-18            # "Updated on 18 Jun 2026" on the page
+    url: "https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/policies/cyber-activities/National-Cloud-Security-Policy"
+    url_checked: true                   # the team copied the page text on 24 Oct 2026
+    auto_fetch: false
+    licence: link_and_excerpt
+    topics: [cloud, data, resilience, digital_government]
+    verification: official_summary
+    file: "team copy NCSP_official_summary_u.ae.md, sha256 080a363483a8900106d678a03e42e0f0914a979265b2e6bf685ba77774180e88"
+    notes: "Verbatim one-line descriptions of every policy domain for cloud consumers (9) and cloud service providers (11, incl. 'Cloud Operation and Maintenance' with on-site support for Sovereign Cloud environments, and 'Integration with UAE Initiatives'). Names the domain 'Data Location and Sovereignty'. Holds no tier or key-custody clause."
+
+  - id: uae-pdpl-2021
+    url_checked: true             # the team downloaded the English PDF from this link on 24 Oct 2026
+    title: "Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data"
+    issuer: "UAE Federal Government"
+    jurisdiction: UAE
+    instrument_type: law
+    version_date: 2021-09-20          # issued; in force 2022-01-02
+    url: "https://uaelegislation.gov.ae/en/legislations/1972/download"
+    auto_fetch: true
+    local_file: uae-pdpl-2021.pdf
+    licence: link_and_excerpt
+    topics: [data, ai_governance]
+    verification: primary_extracted
+    file: "English translation, 29 pages, sha256 d5d5f9e93bd6c0dc2afe79776f3101bcd599e4400a67309bc0b378b2812bcf3a (kb/build/fetch_manifest.json)"
+    notes: "18 verbatim clauses machine-cut from the official file on 24 Oct 2026 (kb/curated/clauses.yaml; kb/extract_clauses.py --check passes). Art. 2(2)(a)-(b) excludes government data and governmental entities that control or process personal data (p. 6), as the secondary sources said. Art. 18 (p. 21-22) is a right to object to decisions from automated processing, with exceptions in 18(2) and human review on request in 18(4). 'Government Data' is not defined in Art. 1 of this file. Two-person check pending (docs/T06_PDPL_CLAUSES.md)."
+
+  - id: uae-telecom-law-2003
+    title: "Federal Law by Decree No. (3) of 2003 regarding the Organization of the Telecommunications Sector, as amended"
+    issuer: "UAE Federal Government"
+    jurisdiction: UAE
+    instrument_type: law
+    version_date: 2003                # amended incl. 2008, 2020
+    url: "https://u.ae/-/media/Resources/TDRA-telecom-law_Final_english_o.pdf"
+    auto_fetch: true
+    local_file: uae-telecom-law-2003.pdf
+    licence: link_and_excerpt
+    topics: [telecom]
+    verification: primary_partial
+    notes: "Arts. 1-9 read on 23 Oct: no emergency, priority or subsea-cable powers found there. TDRA's competency article not yet located. WAM (Aug 2026) refers to an amended federal decree-law that regulates the telecommunications sector - check for a newer consolidated text."
+
+  - id: uae-ciip-policy
+    title: "Critical Information Infrastructure Protection (CIIP) Policy"
+    issuer: "Supreme Council for National Security / National Electronic Security Authority"
+    jurisdiction: UAE
+    instrument_type: policy
+    version_date: unknown
+    url: "https://u.ae/en/information-and-services/justice-safety-and-the-law/-/media/Documents-2023/Critical-Information-Infrastructure-Protection-CIIP-Policy.ashx"
+    auto_fetch: true
+    local_file: uae-ciip-policy.pdf
+    licence: link_and_excerpt
+    topics: [resilience, telecom, digital_government, continuity]
+    verification: primary_partial
+    notes: "Sec. 1.3 lists 10 critical sectors incl. ICT (telecommunications, satellite) and Government. Sec. 2.2-2.4 risk assessment and sector plans. Resilience/BCM and incident-reporting clauses not yet located."
+
+  - id: uae-ncema-7000-2021
+    url_checked: false            # link not opened from our workspace yet; confirm before citing
+    title: "AE/SCNS/NCEMA 7000:2021 The National Standard for Business Continuity Management System"
+    issuer: "National Emergency Crisis and Disasters Management Authority (NCEMA)"
+    jurisdiction: UAE
+    instrument_type: standard
+    version_date: 2021
+    url: "https://www.enec.gov.ae/doc/ae-scns-ncema-7000-2021-specificationspublication-en-62bbcd1249cf5.pdf"
+    auto_fetch: true
+    local_file: uae-ncema-7000-2021.pdf
+    licence: link_and_excerpt
+    topics: [continuity, resilience]
+    verification: pending
+    notes: "Copy hosted by ENEC; official source is ncema.gov.ae. Applies to UAE government and private entities' own continuity; check whether it says anything about national restoration priority."
+
+  - id: uae-cabinet-agentic-2026
+    title: "UAE Cabinet meeting, 23 April 2026: framework to move 50% of government sectors and services to agentic AI within two years"
+    issuer: "UAE Government Media Office"
+    jurisdiction: UAE
+    instrument_type: announcement
+    version_date: 2026-04-23
+    url: "https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting"
+    auto_fetch: true
+    local_file: uae-cabinet-agentic-2026.html
+    licence: link_and_excerpt
+    topics: [digital_government, ai_governance]
+    verification: primary_verified
+    notes: "Read on 23 Oct: the Cabinet set a target to move 50% of UAE government sectors and services to agentic AI, for autonomous execution and decision-making, within two years."
+
+  - id: uae-tdra-licence-2026
+    title: "TDRA Board renews telecom operators' licences for 20 years"
+    issuer: "WAM (Emirates News Agency)"
+    jurisdiction: UAE
+    instrument_type: news
+    version_date: 2026-08-12
+    url: "https://www.wam.ae/en/article/c1p3siv-tdra-board-renews-telecom-operators-licences-for"
+    auto_fetch: true
+    local_file: uae-tdra-licence-2026.html
+    licence: link_and_excerpt
+    topics: [telecom, resilience]
+    verification: primary_verified
+    notes: "WAM reports a TDRA official describing the renewed licences as reflecting that telecom networks have become critical national infrastructure."
+
+  - id: uae-tdra-gitex-2021
+    title: "TDRA presents telecom infrastructure readiness at GITEX 2021"
+    issuer: "WAM (Emirates News Agency)"
+    jurisdiction: UAE
+    instrument_type: news
+    version_date: 2021-10-19
+    url: "https://www.wam.ae/en/article/hszrdbq7-tdra-presents-telecom-infrastructure-readiness"
+    auto_fetch: true
+    local_file: uae-tdra-gitex-2021.html
+    licence: link_and_excerpt
+    topics: [telecom, resilience]
+    verification: primary_verified
+    notes: "Shows TDRA plans exist for submarine cable malfunctions; the plans themselves were not found published."
+
+  - id: uae-ai-charter-2024
+    url_checked: false            # link not opened from our workspace yet; confirm before citing
+    title: "UAE Charter for the Development and Use of Artificial Intelligence"
+    issuer: "UAE Government"
+    jurisdiction: UAE
+    instrument_type: policy
+    version_date: 2024
+    url: "https://uaelegislation.gov.ae/en/policy/details/the-uae-charter-for-the-development-and-use-of-artificial-intelligence"
+    auto_fetch: true
+    local_file: uae-ai-charter-2024.html
+    licence: link_and_excerpt
+    topics: [ai_governance]
+    verification: pending
+    notes: "Non-binding principles incl. human oversight (per earlier research). Confirm wording."
+
+  - id: uae-api-first-policy
+    title: "UAE API-First Policy"
+    issuer: "UAE Government"
+    jurisdiction: UAE
+    instrument_type: policy
+    version_date: unknown
+    url: "https://uaelegislation.gov.ae/en/policy/details/api-first-policy"
+    auto_fetch: true
+    local_file: uae-api-first-policy.html
+    licence: link_and_excerpt
+    topics: [digital_government, data]
+    verification: pending
+    notes: "From the team's revision pack; not opened yet."
+
+  - id: uae-unified-digital-platform-policy
+    title: "Unified Digital Platform Policy"
+    issuer: "UAE Government / TDRA"
+    jurisdiction: UAE
+    instrument_type: policy
+    version_date: unknown
+    url: "https://dgov.tdra.gov.ae/en/publications/unified-digital-platform-policy"
+    alt_url: "https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/policies/government-services-and-digital-transformation/unified-digital-platform-policy"
+    auto_fetch: true
+    local_file: uae-unified-digital-platform-policy.html
+    licence: link_and_excerpt
+    topics: [digital_government]
+    verification: pending
+    notes: "From the team's revision pack; not opened yet."
+
+  - id: uae-cyber-info-sharing
+    title: "Cyber Security Information Sharing Framework"
+    issuer: "UAE Government"
+    jurisdiction: UAE
+    instrument_type: framework
+    version_date: unknown
+    url: "https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/strategies-plans-and-visions/Cypersecurity/Cyber-Security-Information-Sharing-Framework"
+    auto_fetch: true
+    local_file: uae-cyber-info-sharing.html
+    licence: link_and_excerpt
+    topics: [resilience, continuity]
+    verification: pending
+    notes: "From the team's revision pack; candidate evidence for gap G5."
+
+  # ---------------- International ----------------
+  - id: itu-t-y3172-2019
+    title: "ITU-T Y.3172 (06/2019) Architectural framework for machine learning in future networks including IMT-2020"
+    issuer: "ITU-T"
+    jurisdiction: International
+    instrument_type: standard
+    version_date: 2019-06-22
+    url: "https://www.itu.int/rec/T-REC-Y.3172/en"
+    auto_fetch: false
+    itu_reference_path: "simulation/server/knowledge/InputDocs/AI_Use_Cases/T-REC-Y.3172-201906-I!!PDF-E.pdf"
+    licence: "(c) ITU 2019, all rights reserved (reproduction needs ITU permission). Read from the copy in ITU's reference repo; we do not redistribute the text."
+    topics: [ai_governance, telecom]
+    verification: primary_verified
+    notes: "Clauses 3.2.6 (ML sandbox) and 8.1 (P node) read on 23 Oct from the copy in ITU's reference repository."
+
+  - id: itu-ai-ready-2-2026
+    title: "AI Ready - Analysis Towards a Standardized Readiness Framework, Report 2.0"
+    issuer: "ITU"
+    jurisdiction: International
+    instrument_type: report
+    version_date: 2026-01
+    url: "https://www.itu.int/dms_pub/itu-t/opb/ai4g/T-AI4G-AI4GOOD-2025-6-PDF-E.pdf"
+    auto_fetch: false
+    itu_reference_path: "simulation/server/knowledge/InputDocs/AI_Strategies/AI_Ready_Framework_2025.pdf"
+    licence: "(c) ITU. Requests to reproduce extracts go to jur@itu.int. Read from the copy in ITU's reference repo; we do not redistribute the text."
+    topics: [ai_governance]
+    verification: primary_verified
+    notes: "Copy from ITU's reference repository."
+
+  - id: itu-icpc-iab-2026
+    title: "International Advisory Body on Submarine Cable Resilience: Report of the Working Groups 2026"
+    issuer: "ITU and ICPC"
+    jurisdiction: International
+    instrument_type: recommendation
+    version_date: 2026-07-10
+    url: "https://www.itu.int/digital-resilience/submarine-cables/wp-content/uploads/sites/2/2026/07/IAB-Publication-2026.pdf"
+    press_release: "https://www.itu.int/en/mediacentre/Pages/PR-2026-07-10-Submarine-cable-resilience-report.aspx"
+    auto_fetch: true
+    local_file: itu-icpc-iab-2026.pdf
+    licence: link_and_excerpt
+    topics: [telecom, resilience, continuity]
+    verification: official_summary
+    notes: "Press release lists priorities: coordination between governments and industry; streamlining regulatory and permitting processes; risk monitoring; route diversity; preparedness. TODO: cite the report's own recommendation numbers."
+
+  - id: eu-ai-act-art15
+    title: "Regulation (EU) 2024/1689 (AI Act), Article 15 Accuracy, robustness and cybersecurity"
+    issuer: "European Union"
+    jurisdiction: International
+    instrument_type: law
+    version_date: 2024-07-12
+    url: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-15"
+    auto_fetch: true
+    local_file: eu-ai-act-art15.html
+    licence: "EU reuse policy (Commission Decision 2011/833/EU): reuse allowed with acknowledgement"
+    topics: [ai_governance, resilience, continuity]
+    verification: primary_verified
+    notes: "Art. 15(4): robustness can be achieved through technical redundancy, which may include backup or fail-safe plans (paraphrased). Global example for G1/G2, not UAE law."
+
+  - id: us-tsp-47cfr64
+    title: "Telecommunications Service Priority (TSP) programme"
+    issuer: "US Federal Communications Commission"
+    jurisdiction: International
+    instrument_type: regulation
+    version_date: unknown
+    url: "https://www.fcc.gov/encyclopedia/telecommunications-service-priority"
+    auto_fetch: true
+    local_file: us-tsp-47cfr64.html
+    licence: "US federal government work (public domain in the US)"
+    topics: [telecom, continuity, resilience]
+    verification: official_summary
+    notes: "Five priority levels; providers restore TSP circuits before non-TSP ones; rules at 47 CFR Part 64 Subpart D Appendix A (per carrier tariffs). Global example for G3, not UAE law."
+
+  - id: canada-dadm-2025
+    title: "Directive on Automated Decision-Making"
+    issuer: "Treasury Board of Canada Secretariat"
+    jurisdiction: International
+    instrument_type: policy
+    version_date: 2025-06-24
+    url: "https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32592"
+    auto_fetch: true
+    local_file: canada-dadm-2025.html
+    licence: "TODO: confirm Government of Canada reuse terms"
+    topics: [ai_governance, digital_government]
+    verification: primary_verified
+    notes: "Sec. 6.1 algorithmic impact assessment published before production; existing systems had until 24 Jun 2026 to comply. Global example for G1."

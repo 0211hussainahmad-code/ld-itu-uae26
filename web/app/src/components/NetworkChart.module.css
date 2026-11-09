@@ -1,0 +1,100 @@
+.figure { position: relative; margin: 0; isolation: isolate; }
+/* Off screen (see NetworkChart.tsx): hold the decorative animations where they are. */
+.figure[data-offscreen] *, .figure[data-motion="paused"] * { animation-play-state: paused; }
+.svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.contours path { fill: none; stroke: var(--contour); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.contours path:nth-child(3n) { stroke: var(--contour-strong); }
+
+/* Cables */
+.cable { fill: none; stroke: var(--cable); stroke-width: 2.2; stroke-linecap: round; vector-effect: non-scaling-stroke;
+  transition: stroke 600ms ease, opacity 600ms ease; }
+.link[data-group="domestic"] .cable { stroke-width: 3; }
+.link[data-state="up"] .cable { stroke: var(--cable-lit); }
+.link[data-state="down"] .cable { stroke: var(--flare); stroke-dasharray: 9 7; opacity: 0.9; }
+.link[data-state="unknown"] .cable { stroke: var(--cable-unknown); stroke-dasharray: 1.5 6; stroke-width: 1.8; }
+.halo { fill: none; stroke: var(--signal); stroke-width: 6; opacity: 0.16; }
+.signal { fill: none; stroke: var(--signal-hot); stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 0.6 11.9;
+  animation: travel linear infinite; }
+@keyframes travel { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+
+/* Break marks where a link fails */
+.break path { fill: none; stroke: var(--flare); stroke-width: 3; stroke-linecap: round; }
+.ripple { fill: none; stroke: var(--flare); stroke-width: 1.5; opacity: 0; animation: ripple 1.6s ease-out 1; transform-box: fill-box; transform-origin: center; }
+@keyframes ripple { 0% { opacity: 0.9; transform: scale(0.4); } 100% { opacity: 0; transform: scale(5.5); } }
+
+/* Nodes */
+.mark, .mark circle, .mark path, rect.mark { fill: var(--abyss); stroke: var(--foam); stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.node[data-kind="domestic"] .mark { fill: var(--foam); }
+.core { fill: var(--signal) !important; stroke: none !important; }
+.node[data-kind="landing"] .mark path { stroke: var(--signal); }
+.endpointRing { fill: none; stroke: var(--sodium); stroke-width: 1.5; stroke-dasharray: 3 4; animation: spin 18s linear infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.name { fill: var(--foam); font-family: var(--font-chart); font-style: italic; font-size: 26px; letter-spacing: 0.01em; paint-order: stroke; stroke: var(--abyss); stroke-width: 6px; stroke-linejoin: round; }
+.sub { fill: var(--foam-dim); font-family: var(--font-code); font-size: 13px; paint-order: stroke; stroke: var(--abyss); stroke-width: 5px; }
+
+/* Intro choreography (hero only) */
+.figure[data-phase="draw"] .cable { stroke-dasharray: 1400 1400; stroke-dashoffset: 1400; animation: draw 1.5s cubic-bezier(.6,.05,.3,1) forwards; }
+.figure[data-phase="draw"] .signal, .figure[data-phase="draw"] .halo { opacity: 0; }
+.figure[data-phase="draw"] .node { opacity: 0; animation: appear 0.8s ease-out 0.9s forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes appear { to { opacity: 1; } }
+
+/* Interaction layer */
+.hitLink { fill: none; stroke: transparent; stroke-width: 30; cursor: pointer; pointer-events: stroke; outline: none; }
+.hitNode { fill: transparent; cursor: pointer; outline: none; }
+.hitLink:focus-visible { stroke: var(--focus-ring); stroke-width: 6; stroke-opacity: 0.6; }
+.hitNode:focus-visible { stroke: var(--focus-ring); stroke-width: 3; }
+.hitLink:hover { stroke: rgba(95, 230, 244, 0.12); }
+
+.card { position: absolute; transform: translate(14px, -50%); z-index: 3; width: min(18rem, 72vw); padding: 0.8rem 1rem 0.7rem;
+  background: var(--glass); border: 1px solid var(--line-strong); border-radius: 10px; backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.8); pointer-events: auto; font-size: var(--step--1); }
+.card[data-flip] { transform: translate(calc(-100% - 14px), -50%); }
+.cardTitle { margin: 0 0 0.4rem; font-weight: 600; color: var(--foam); }
+.cardMeta { display: grid; grid-template-columns: max-content 1fr; gap: 0.15rem 0.8rem; margin: 0; }
+.cardMeta dt { color: var(--foam-dim); }
+.cardMeta dd { margin: 0; }
+.cardMeta dd[data-state="down"] { color: var(--flare); }
+.cardMeta dd[data-state="up"] { color: var(--kelp); }
+.cardNote { margin: 0.5rem 0 0; color: var(--foam-dim); font-size: 0.75rem; }
+.cardClose { margin-top: 0.5rem; min-height: 36px !important; padding: 0.3rem 0.8rem !important; }
+
+.caption { position: absolute; right: 0.5rem; bottom: 0.25rem; max-width: calc(100% - 1rem); text-align: right; font-family: var(--font-code); font-size: 0.72rem; color: var(--foam-faint); }
+
+@media (prefers-reduced-motion: reduce) {
+  .signal { animation: none; stroke-dasharray: 0.6 6; }
+  .ripple, .endpointRing { animation: none; }
+  .figure[data-phase] .cable, .figure[data-phase] .node { animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; }
+}
+
+/* Compact: small real views (events, role lenses). No moving light, heavier lines. */
+.figure[data-compact] .signal, .figure[data-compact] .halo, .figure[data-compact] .ripple { display: none; }
+.figure[data-compact] .contours path { stroke: rgba(120, 170, 220, 0.07); }
+.figure[data-compact] .cable { stroke-width: 3.5; }
+.figure[data-compact] .link[data-state="up"] .cable { stroke: var(--signal); opacity: 0.85; }
+.figure[data-compact] .mark, .figure[data-compact] .mark circle, .figure[data-compact] .mark path, .figure[data-compact] rect.mark { stroke-width: 2.4; }
+.figure[data-compact] .break path { stroke-width: 6; }
+
+@media (max-width: 900px) { .caption { position: static; display: block; margin-top: 0.2rem; padding-right: 0.5rem; } }
+@media (max-width: 640px) { .sub { display: none; } .name { font-size: 34px; } }
+
+/* Record-derived consequences (story chapters): an endpoint that moved, a transfer held at the gate. */
+.moved path:not(marker path) { fill: none; stroke: var(--signal-hot); stroke-width: 3; stroke-dasharray: 10 8; }
+.arrowHead { fill: var(--signal-hot); }
+.held path { fill: none; stroke: var(--sodium); stroke-width: 3; stroke-dasharray: 2 9; stroke-linecap: round; }
+.held .heldRest { stroke: var(--foam-faint); stroke-width: 1.5; stroke-dasharray: 2 10; opacity: 0.6; }
+.heldGate rect { fill: var(--sodium); }
+.overlayLabel { fill: var(--foam); font-family: var(--font-code); font-size: 17px; paint-order: stroke; stroke: var(--abyss); stroke-width: 6px; stroke-linejoin: round; }
+@media (max-width: 640px) { .overlayLabel { font-size: 24px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .moved path:not(marker path) { animation: march 1.6s linear infinite; }
+  @keyframes march { to { stroke-dashoffset: -36; } }
+}
+.overlayKey { display: none; }
+@media (max-width: 640px) {
+  .overlayLabel { display: none; }      /* in-map labels would be clipped on a phone: use the key below */
+  .overlayKey { display: flex; flex-wrap: wrap; gap: 0.2rem 1rem; margin: 0.2rem 0 0; font-family: var(--font-code); font-size: 0.7rem; color: var(--foam); }
+  .overlayKey span::before { content: ""; display: inline-block; width: 16px; height: 0; margin-right: 0.35rem; vertical-align: 0.25em; border-top: 2px dashed var(--signal-hot); }
+  .overlayKey span[data-k="held"]::before { border-top: 2px dotted var(--sodium); }
+}

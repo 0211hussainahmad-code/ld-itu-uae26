@@ -1,0 +1,15 @@
+# LinkDown runtime
+httpx>=0.27,<1
+PyYAML>=6,<7
+networkx>=3,<4
+beautifulsoup4>=4.12,<5
+pymupdf==2.0          # pinned: PDF text extraction feeds the frozen bake-off inputs (eval/bakeoff_manifest.json)
+
+# ITU reference code (vendor/ITUAIReadiness) needs these for its ingest module
+ollama>=0.4,<1
+pydantic>=2,<3
+pydantic-settings>=2,<3
+chromadb>=0.5,<2
+
+# tests
+pytest>=8

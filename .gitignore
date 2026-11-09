@@ -1,0 +1,27 @@
+# third-party code and documents (fetched by scripts, not redistributed)
+vendor/
+kb/docs/
+kb/build/chromadb/
+# chunk text includes copyrighted documents (e.g. ITU-T Recs: reproduction needs ITU permission);
+# rebuild locally with: python kb/build_kb.py. Manifests and eval results ARE committed.
+kb/build/chunks.jsonl
+
+# run outputs (keep selected runs by copying them to evidence/)
+runs/
+
+# secrets
+.env
+*.key
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# website (web/): build outputs and local tooling
+web/app/node_modules/
+web/app/dist/
+web/app/test-results/
+web/app/playwright-report/
+web/.work/

@@ -1,0 +1,91 @@
+# Default-deny licence register for PUBLIC website output (plan rev 2.1, section 6).
+#
+# Every source in kb/sources.yaml must have an entry; a missing source blocks the build.
+# publish: metadata_only     -> only id, title, issuer, date, URL, verification status may appear publicly.
+# publish: approved_excerpts -> additionally the excerpt ids listed under approved_excerpts, each with a
+#                               named human approver, date and reason. Length never grants permission.
+# ITU documents stay metadata_only for Phase 1. The shingle scanner is defence in depth, not permission.
+# Changing any entry from metadata_only requires an explicit team approval recorded here.
+version: licences-0.1
+default: metadata_only
+sources:
+  uae-ncsp-v2-2025:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-ncsp-summary-legportal:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-ncsp-summary-uae:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-pdpl-2021:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-telecom-law-2003:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-ciip-policy:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-ncema-7000-2021:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-cabinet-agentic-2026:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-tdra-licence-2026:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-tdra-gitex-2021:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-ai-charter-2024:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-api-first-policy:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-unified-digital-platform-policy:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  uae-cyber-info-sharing:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  itu-t-y3172-2019:
+    publish: metadata_only
+    licence_basis: "(c) ITU 2019, all rights reserved (reproduction needs ITU permission)"
+    approved_excerpts: []
+  itu-ai-ready-2-2026:
+    publish: metadata_only
+    licence_basis: "(c) ITU. Requests to reproduce extracts go to jur@itu.int"
+    approved_excerpts: []
+  itu-icpc-iab-2026:
+    publish: metadata_only
+    licence_basis: "No redistribution licence found (kb/sources.yaml: link_and_excerpt)."
+    approved_excerpts: []
+  eu-ai-act-art15:
+    publish: metadata_only
+    licence_basis: "EU reuse policy (Commission Decision 2011/833/EU): reuse allowed with acknowledgement"
+    approved_excerpts: []
+  us-tsp-47cfr64:
+    publish: metadata_only
+    licence_basis: "US federal government work (public domain in the US)"
+    approved_excerpts: []
+  canada-dadm-2025:
+    publish: metadata_only
+    licence_basis: "TODO: confirm Government of Canada reuse terms"
+    approved_excerpts: []

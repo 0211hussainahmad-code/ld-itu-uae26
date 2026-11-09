@@ -1,0 +1,107 @@
+.gateBox { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.1rem; overflow-wrap: anywhere; padding: clamp(1.1rem, 3vw, 2rem); border: 1px solid var(--line); border-top: 2px solid var(--sodium);
+  background: linear-gradient(180deg, rgba(14, 37, 70, 0.55), rgba(4, 16, 38, 0.2)); }
+.gateBox[data-outcome="PERMITTED"] { border-top-color: var(--kelp); }
+.gateBox[data-outcome="PROHIBITED"] { border-top-color: var(--flare); }
+.head { display: grid; gap: 0.3rem; }
+.title { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.05; letter-spacing: -0.015em; }
+.subtitle { margin: 0; color: var(--foam-dim); }
+
+/* Diagram: lane, gate, authority above, outcome to the right. */
+.diagram { width: 100%; max-width: 640px; height: auto; display: block; overflow: visible; }
+.diagram text { fill: var(--foam); font-family: var(--font-sans); font-size: 14px; }
+.diagram .sub { fill: var(--foam-faint); font-size: 12px; }
+.lane { stroke: var(--cable-lit); stroke-width: 2; fill: none; }
+.laneDone { stroke: var(--cable); stroke-width: 2; stroke-dasharray: 4 6; fill: none; transition: stroke 600ms ease; }
+.diagram[data-pos="through"] .laneDone { stroke: var(--kelp); stroke-dasharray: none; }
+.upLane { stroke: var(--line-strong); stroke-width: 1.5; stroke-dasharray: 3 5; fill: none; transition: stroke 400ms ease; }
+.diagram[data-pos="authority"] .upLane, .diagram[data-pos="held"] .upLane { stroke: var(--sodium); }
+.authority rect { fill: rgba(10, 28, 56, 0.9); stroke: var(--line-strong); transition: stroke 400ms ease; }
+.authority[data-active] rect { stroke: var(--sodium); }
+.verdict { fill: var(--flare) !important; font-weight: 600; }
+.verdict[data-ok] { fill: var(--kelp) !important; }
+.post { fill: var(--foam-dim); }
+.bar { fill: var(--sodium); transform-box: fill-box; transform-origin: left center; transition: transform 700ms var(--ease-out), fill 400ms ease; }
+.diagram[data-open] .bar { transform: rotate(-80deg); fill: var(--kelp); }
+.diagram[data-outcome="PROHIBITED"] .bar { fill: var(--flare); }
+.end rect { fill: rgba(10, 28, 56, 0.9); stroke: var(--line); transition: stroke 400ms ease; }
+.end[data-active] rect { stroke: var(--kelp); }
+.end text { fill: var(--foam-dim); }
+.end[data-active] text { fill: var(--foam); }
+
+.token { transition: transform 900ms var(--ease-out); }
+.token circle { fill: var(--signal); stroke: var(--signal-hot); stroke-width: 2; }
+.token[data-pos="start"] { transform: translate(62px, 168px); }
+.token[data-pos="approach"] { transform: translate(250px, 168px); }
+.token[data-pos="gate"] { transform: translate(312px, 168px); }
+.token[data-pos="blocked"] { transform: translate(312px, 168px); }
+.token[data-pos="blocked"] circle { fill: var(--flare); stroke: var(--flare); }
+.token[data-pos="authority"], .token[data-pos="held"] { transform: translate(352px, 100px); }
+.token[data-pos="authority"] circle, .token[data-pos="held"] circle { fill: var(--sodium); stroke: #ffe1ad; }
+.token[data-pos="held"] circle { fill: transparent; stroke-dasharray: 3 3; }
+.token[data-pos="through"] { transform: translate(456px, 168px); }
+.token[data-pos="through"] circle { fill: var(--kelp); stroke: #b9f5e7; }
+.x { stroke: #2a0606; stroke-width: 2.4; stroke-linecap: round; }
+
+/* Stepper: a real sequence, so the stages are numbered. */
+.stages { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.35rem; }
+.stages button { width: 100%; min-height: 54px; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 0.5rem; text-align: left;
+  padding: 0.45rem 0.6rem; border: 1px solid var(--line); border-radius: 2px; background: none; color: var(--foam-faint); cursor: pointer; font-size: var(--step--1); line-height: 1.2; }
+.stages button:hover { color: var(--foam); border-color: var(--line-strong); }
+.stages button[data-done] { color: var(--foam-dim); border-color: var(--line-strong); }
+.stages button[aria-current="step"] { color: var(--foam); border-color: var(--signal); box-shadow: inset 0 -2px 0 var(--signal); }
+.n { font-family: var(--font-display); font-size: 1.3rem; font-variant-numeric: lining-nums tabular-nums; }
+.panel { min-height: 11rem; max-width: 62ch; }
+.stageName { margin: 0 0 0.6rem; font-family: var(--font-sans); font-weight: 600; font-size: var(--step--1); color: var(--signal); }
+.lead { font-size: var(--step-1); line-height: 1.4; color: var(--foam); }
+.recorded { font-family: var(--font-code); font-size: 0.86em; color: var(--foam-dim); }
+.muted { color: var(--foam-faint); font-size: var(--step--1); }
+.list { margin: 0 0 0.8rem; padding-left: 1.1rem; display: grid; gap: 0.45rem; color: var(--foam-dim); }
+.facts { display: grid; grid-template-columns: minmax(8rem, max-content) minmax(0, 1fr); gap: 0.25rem 1rem; margin: 0 0 1rem; font-size: var(--step--1); }
+.facts dt { color: var(--foam-faint); }
+.facts dd { margin: 0; overflow-wrap: anywhere; }
+.trail { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.7rem; }
+.trail li { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+.trail li[data-downgraded] { padding-left: 0.6rem; border-left: 2px solid var(--sodium); }
+.rule { display: flex; flex-wrap: wrap; gap: 0.3rem 0.7rem; align-items: center; }
+.would { color: var(--sodium); font-weight: 600; }
+.explain { color: var(--foam-dim); font-size: var(--step--1); }
+.verdictLine { font-size: var(--step-2); margin-bottom: 0.4rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.allStages { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.4rem; }
+.allStages > li { border-top: 1px solid var(--line); padding-top: 0.9rem; }
+
+@media (max-width: 760px) {
+  .stages { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stageLabel { font-size: 0.78rem; }
+  .facts { grid-template-columns: 1fr; }
+  .facts dd { margin-bottom: 0.35rem; }
+}
+@media (max-width: 380px) {
+  .stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.token[data-pos="stopped"] { transform: translate(312px, 168px); }
+.token[data-pos="stopped"] circle { fill: transparent; stroke: var(--foam-dim); stroke-dasharray: 3 3; }
+.controls .btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+.allToggle { justify-self: start; padding-inline: 0; }
+.stages button { min-height: 58px; }
+
+/* Long outcome names ("Insufficient authority or evidence") may wrap on narrow screens. */
+.gateBox :global(.outcome) { white-space: normal; max-width: 100%; }
+.gateBox :global(.outcome)::before { flex-shrink: 0; }
+.note { color: var(--foam-dim); font-size: var(--step--1); font-weight: 400; }
+.panel { min-height: 15rem; }
+@media (max-width: 760px) { .panel { min-height: 20rem; } }
+.hedge { color: var(--sodium); }
+/* Back/Next sit above the stage text, so they never move as the text changes length. */
+.controls { margin: 0.2rem 0 0.8rem; }
+.end[data-none] rect { stroke-dasharray: 4 5; opacity: 0.6; }
+.end[data-none] text { fill: var(--foam-faint); text-decoration: line-through; }
+
+/* Small-diagram layout (data-narrow, set from the diagram's rendered width). --gate-u is viewBox units per rendered
+   pixel, so the type renders at about 11.5px whatever the width, never larger than the boxes are drawn for. */
+.diagram[data-narrow] text { font-size: min(28px, calc(11.5px * var(--gate-u, 2.4))); }
+.diagram[data-narrow] .sub { font-size: min(27px, calc(11px * var(--gate-u, 2.4))); }
+.diagram[data-narrow] .end text { font-size: min(26px, calc(11px * var(--gate-u, 2.4))); }
+.diagram[data-narrow] .token[data-pos="through"] { transform: translate(402px, 168px); }
+/* The small layout's drawing area starts at x=46: keep the start token clear of the edge. */
+.diagram[data-narrow] .token[data-pos="start"] { transform: translate(84px, 168px); }

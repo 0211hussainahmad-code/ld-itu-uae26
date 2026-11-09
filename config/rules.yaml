@@ -1,0 +1,159 @@
+# LinkDown authority gate rules (the policy ("P") node of ITU-T Y.3172 (06/2019),
+# clause 8.1; see that Recommendation for its definition).
+#
+# Two kinds of rule, never mixed up:
+#   legal    - derived from a real UAE or international text in kb/sources.yaml
+#   exercise - a rule of this simulation (permissions, safety), NOT a claim about law
+#
+# Outcomes: PERMITTED | PROHIBITED | INSUFFICIENT_AUTHORITY_OR_EVIDENCE
+# A legal PROHIBITED only fires as PROHIBITED when its source clause is
+# primary_verified AND `ledger:` points to a complete entry in
+# kb/verification_ledger.yaml (quote, page, section, two human verifiers, file
+# hash matching kb/build/fetch_manifest.json). Otherwise the gate downgrades it to
+# INSUFFICIENT_AUTHORITY_OR_EVIDENCE and says why (adjustment #1 and #7).
+# The same applies to legal PERMITTED rules (rules-0.3, after GPT-6 review): an
+# unverified source can neither prohibit nor permit; the gate escalates instead.
+# These rules are EXERCISE rules informed by sources; they are not UAE law.
+# rules-0.4 (24 Oct, GPT-6 R0b R01): ER-ENDPOINT-UNAVAILABLE - switching to an endpoint
+# the state marks unavailable is PROHIBITED (feasibility), instead of PERMITTED then a no-op.
+version: rules-0.4
+
+# Which role may propose which tool (exercise rule ER-ROLE).
+tool_permissions:
+  operator:   [reroute_traffic, apply_operator_qos, send_message]
+  service:    [set_service_mode, switch_ai_endpoint, transfer_records, send_message]
+  regulator:  [request_information, recommend_priority_plan, issue_priority_order, send_message]
+  adviser:    [send_message, record_gap_observation]
+
+legal:
+  - id: L-PDPL-ART2
+    effect: note                      # informational: changes which regime applies, decides nothing
+    source: uae-pdpl-2021
+    clause: "Art. 2(2): excludes government data and government entities that control or process personal data"
+    verification: secondary_only      # Baker McKenzie, Modulos; primary PDF to be checked
+    when: {tool: transfer_records, entity_type: [federal_authority, emirate_entity_ciip, emirate_entity_no_ciip]}
+    explain: "The federal PDPL does not govern this transfer because Art. 2 excludes government data and government entities. Other instruments must be checked."
+
+  - id: L-NCSP-SCOPE-PRIVATE
+    effect: INSUFFICIENT_AUTHORITY_OR_EVIDENCE
+    source: uae-ncsp-v2-2025
+    clause: "Scope: cloud consumers = ministries, federal authorities, non-government CII entities"
+    verification: official_summary    # uaelegislation.gov.ae policy page lists the target audience
+    when: {tool: transfer_records, entity_type: [private_non_cii]}
+    explain: "This entity is outside the National Cloud Security Policy's consumer scope; other regimes (e.g. PDPL cross-border rules) are not modelled, so the gate cannot decide."
+
+  - id: L-NCSP-EMIRATE-CIIP
+    effect: INSUFFICIENT_AUTHORITY_OR_EVIDENCE
+    source: uae-ncsp-v2-2025
+    clause: "Scope: where an Emirate CIIP programme exists, the emirate lead determines applicability"
+    verification: official_summary
+    when: {tool: transfer_records, entity_type: [emirate_entity_ciip]}
+    explain: "Applicability is decided by the emirate's CIIP lead authority, which this exercise does not model."
+
+  - id: L-NCSP-CLASS-MISSING
+    effect: INSUFFICIENT_AUTHORITY_OR_EVIDENCE
+    source: uae-ncsp-v2-2025
+    clause: "Tier depends on data classification"
+    verification: secondary_only
+    when: {tool: transfer_records, data_class: [unclassified], dest_in_uae: false}
+    explain: "The records carry no classification, so the applicable sovereignty tier cannot be determined."
+
+  - id: L-NCSP-KEYS
+    effect: PROHIBITED
+    source: uae-ncsp-v2-2025
+    clause: "All tiers: hosted encryption keys and backups generated, stored and managed within the UAE"
+    verification: secondary_only      # Al Tamimi, 15 Oct 2026; clause number pending primary PDF
+    when: {tool: transfer_records, entity_type: [federal_authority, emirate_entity_no_ciip], keys_in_uae: false}
+    explain: "Encryption keys for hosted data must be generated, stored and managed in the UAE."
+
+  - id: L-NCSP-PARTIAL
+    effect: PROHIBITED
+    source: uae-ncsp-v2-2025
+    clause: "Partial-sovereign tier (confidential/restricted): data stored strictly within UAE boundaries and jurisdiction"
+    verification: secondary_only
+    when: {tool: transfer_records, entity_type: [federal_authority, emirate_entity_no_ciip], data_class: [confidential_restricted], dest_in_uae: false}
+    explain: "Confidential/restricted data must stay within the UAE's geographical boundaries and legal jurisdiction."
+
+  - id: L-NCSP-SOVEREIGN
+    effect: PROHIBITED
+    source: uae-ncsp-v2-2025
+    clause: "Sovereign tier (above confidential/restricted): exclusive UAE jurisdiction"
+    verification: secondary_only
+    when: {tool: transfer_records, entity_type: [federal_authority, emirate_entity_no_ciip], data_class: [above_confidential], dest_in_uae: false}
+    explain: "Data above confidential/restricted must remain under the exclusive jurisdiction of UAE authorities."
+
+  - id: L-NCSP-BASELINE
+    effect: PERMITTED
+    source: uae-ncsp-v2-2025
+    clause: "Baseline tier: data location known at all stages and handled per applicable UAE laws"
+    verification: secondary_only
+    when: {tool: transfer_records, entity_type: [federal_authority, emirate_entity_no_ciip], data_class: [baseline], keys_in_uae: true}
+    conditions: ["record the data location at every stage", "check other applicable UAE laws before execution"]
+    explain: "Baseline data may be hosted where its location is known and recorded, subject to other UAE laws."
+
+  - id: L-NCSP-DOMESTIC
+    effect: PERMITTED
+    source: uae-ncsp-v2-2025
+    clause: "Data stays within the UAE"
+    verification: secondary_only
+    when: {tool: transfer_records, dest_in_uae: true, keys_in_uae: true, entity_type: [federal_authority, emirate_entity_no_ciip]}
+    conditions: ["record the data location at every stage"]
+    explain: "The destination is inside the UAE and keys stay in the UAE."
+
+exercise:
+  - id: ER-ROLE
+    effect: PROHIBITED
+    explain: "The proposing role does not hold this tool in the exercise permission matrix."
+
+  - id: ER-OPS-REROUTE
+    effect: PERMITTED
+    when: {tool: [reroute_traffic, apply_operator_qos]}
+    explain: "Operators may re-route or prioritise within their own simulated network."
+
+  - id: ER-SVC-MODE
+    effect: PERMITTED
+    when: {tool: [set_service_mode], mode: [full, reduced, manual_queue]}
+    explain: "A service may reduce itself or switch to a human-processed queue."
+
+  - id: ER-SVC-OFFLINE
+    effect: PERMITTED
+    requires_human: true
+    when: {tool: [set_service_mode], mode: [offline]}
+    explain: "Taking a public service fully offline is high-impact and needs the exercise controller."
+
+  - id: ER-ENDPOINT-UNAVAILABLE
+    effect: PROHIBITED
+    when: {tool: [switch_ai_endpoint], dest_available: false}
+    explain: "The exercise state shows no available model endpoint in that region, so the switch cannot be carried out. (An exercise feasibility rule, not a legal finding.)"
+
+  - id: ER-SVC-ENDPOINT
+    effect: PERMITTED
+    when: {tool: [switch_ai_endpoint], moves_records: false}
+    explain: "Switching the model endpoint without moving records is an operational choice."
+
+  - id: ER-SVC-ENDPOINT-DATA
+    effect: INSUFFICIENT_AUTHORITY_OR_EVIDENCE
+    when: {tool: [switch_ai_endpoint], moves_records: true}
+    explain: "Switching would move records; it must be proposed as transfer_records so the legal rules apply."
+
+  - id: ER-XBORDER-HUMAN
+    effect: PERMITTED
+    requires_human: true
+    when: {tool: [transfer_records], dest_in_uae: false}
+    explain: "Any cross-border movement of personal records is high-impact and needs the exercise controller, even when permitted."
+
+  - id: ER-REG-INFO
+    effect: PERMITTED
+    when: {tool: [request_information, recommend_priority_plan]}
+    explain: "The regulator role may request information and make non-binding recommendations."
+
+  - id: ER-REG-ORDER
+    effect: INSUFFICIENT_AUTHORITY_OR_EVIDENCE
+    requires_human: true
+    when: {tool: [issue_priority_order]}
+    explain: "No publicly verified power for a binding national priority order was found; it is escalated to the human exercise controller as a non-binding exercise decision."
+
+  - id: ER-NOTIFY
+    effect: PERMITTED
+    when: {tool: [send_message, record_gap_observation]}
+    explain: "Messages and observations are always allowed and always logged."

@@ -1,0 +1,18 @@
+{
+  "schema": "linkdown-bundle-manifest/1",
+  "bundles": [
+    {
+      "bundle_id": "a918b89a9b4271a1",
+      "file": "a918b89a9b4271a1.json",
+      "sha256": "a918b89a9b4271a151de3801b9d922746d4e01e1cc063a13408bf0c2485a3704",
+      "mode": "offline-NOT-AI",
+      "label": "Scripted replay — not AI (TEST-DOUBLE-NOT-AI)",
+      "audit_head": "86b18428c0af7220c93c5aa5b901c1b5fdbb119e098305b4aca6c8ed66249812",
+      "record_count": 127,
+      "withheld_count": 0,
+      "source_commit": "e6da3db524a7720f89e3c7032b6c0f9d165cf5c1",
+      "generator_run_url": "https://github.com/0211hussainahmad-code/linkdown/actions/runs/41297870924",
+      "created_at": "2026-11-01T10:40:11Z"
+    }
+  ]
+}

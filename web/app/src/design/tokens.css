@@ -1,0 +1,121 @@
+/* LinkDown design tokens: "The Signal Beneath".
+   Colour never carries meaning alone: gate outcomes always pair a glyph with text. */
+:root {
+  --abyss: #041026;
+  --abyss-deep: #020a1a;
+  --trench: #0a1c38;
+  --trench-2: #0e2546;
+  --shelf: #16365e;
+  --shelf-light: #1d4a7c;
+  --signal: #5fe6f4;
+  --signal-hot: #c8fbff;
+  --kelp: #2ec4a6;
+  --foam: #e6f1f7;
+  --foam-dim: #9fb7c9;
+  --foam-faint: #7f98ae;   /* raised from #6f8aa1: >= 5.1:1 on --abyss, --trench and --trench-2; still 1.44:1 below --foam-dim */
+  --sodium: #f5b04a;
+  --flare: #ff6b5b;
+
+  --cable: #2a4f7a;
+  --cable-lit: #3f8fb2;
+  --cable-unknown: #3a4f66;
+  --contour: rgba(120, 170, 220, 0.09);
+  --contour-strong: rgba(120, 170, 220, 0.16);
+  --line: rgba(159, 183, 201, 0.16);
+  --line-strong: rgba(159, 183, 201, 0.32);
+  --glass: rgba(10, 28, 56, 0.86);
+  --focus-ring: var(--signal);
+
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-display: "Newsreader", Georgia, serif;
+  --font-chart: "Newsreader", Georgia, serif;
+  --font-code: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* type scale, ratio ~1.25 on a 17px body */
+  --step--2: 0.76rem;
+  --step--1: 0.85rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.33rem;
+  --step-2: 1.66rem;
+  --step-3: 2.08rem;
+  --step-4: 2.6rem;
+  --display: clamp(3rem, 8.4vw, 8.6rem);
+
+  --measure: 66ch;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --radius: 10px;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--abyss-deep); color: var(--foam); font-family: var(--font-sans); font-size: 100%;
+  -webkit-text-size-adjust: 100%; text-rendering: optimizeLegibility; }
+body { margin: 0; font-size: var(--step-0); line-height: 1.55; min-height: 100vh;
+  background:
+    radial-gradient(1200px 700px at 70% -10%, rgba(29, 74, 124, 0.35), transparent 60%),
+    radial-gradient(900px 600px at -10% 110%, rgba(10, 28, 56, 0.9), transparent 70%),
+    var(--abyss); background-attachment: fixed; }
+h1, h2, h3 { line-height: 1.12; margin: 0; font-weight: 500; }
+p { margin: 0 0 1em; }
+a { color: var(--signal); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--signal-hot); }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; border-radius: 4px; }
+code, .mono { font-family: var(--font-code); font-size: 0.9em; }
+.hash { font-family: var(--font-code); font-size: 0.85em; overflow-wrap: anywhere; letter-spacing: 0.02em; }
+/* Grouped hashes break only between eight-character groups (the margin is not text, so copying is exact). */
+.hash-groups { overflow-wrap: normal; }
+.hash-groups > span { display: inline-block; margin-right: 0.45em; }
+.hash-groups > span:last-child { margin-right: 0; }
+.hash-prefix { color: var(--foam-faint); }
+::selection { background: rgba(95, 230, 244, 0.3); }
+
+button { font: inherit; color: inherit; }
+.btn { position: relative; display: inline-flex; align-items: center; gap: 0.55rem; min-height: 46px; padding: 0.6rem 1.2rem; border-radius: 2px;
+  border: 1px solid var(--line-strong); background: transparent; color: var(--foam); cursor: pointer; text-decoration: none;
+  font-weight: 500; letter-spacing: 0.005em; transition: background 160ms ease, border-color 160ms ease, color 160ms ease; overflow: hidden; }
+.btn:hover { border-color: var(--foam-dim); color: var(--foam); background: rgba(159, 183, 201, 0.06); }
+.btn-primary { border-color: var(--signal); color: var(--signal-hot); background: rgba(95, 230, 244, 0.07); }
+.btn-primary::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--signal);
+  transform: scaleX(0.18); transform-origin: left; transition: transform 380ms var(--ease-out); }
+.btn-primary:hover { color: var(--foam); border-color: var(--signal-hot); background: rgba(95, 230, 244, 0.13); }
+.btn-primary:hover::after { transform: scaleX(1); }
+.btn-quiet { border-color: transparent; padding-inline: 0.7rem; color: var(--foam-dim); text-decoration: underline; text-underline-offset: 0.25em; text-decoration-color: var(--line-strong); }
+.btn-quiet:hover { color: var(--foam); background: rgba(159, 183, 201, 0.08); border-color: transparent; }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+.icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 2px; border: 1px solid var(--line-strong);
+  background: transparent; cursor: pointer; color: var(--foam); }
+.icon-btn:hover { border-color: var(--signal); }
+.icon-btn[aria-pressed="true"] { background: var(--signal); color: #032030; border-color: var(--signal); }
+
+.skip-link { position: absolute; inset-inline-start: 1rem; inset-block-start: -4rem; background: var(--signal);
+  color: #032030; padding: 0.6rem 1rem; border-radius: 8px; z-index: 50; font-weight: 600; }
+.skip-link:focus { inset-block-start: 1rem; }
+
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Gate outcome glyph + text (never colour alone) */
+.outcome { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; white-space: nowrap; }
+.outcome::before { content: ""; width: 0.7em; height: 0.7em; display: inline-block; }
+.outcome[data-o="PERMITTED"] { color: var(--kelp); }
+.outcome[data-o="PERMITTED"]::before { background: var(--kelp); transform: rotate(45deg) scale(0.85); }
+.outcome[data-o="PROHIBITED"] { color: var(--flare); }
+.outcome[data-o="PROHIBITED"]::before { background: var(--flare); }
+.outcome[data-o="INSUFFICIENT_AUTHORITY_OR_EVIDENCE"] { color: var(--sodium); }
+.outcome[data-o="INSUFFICIENT_AUTHORITY_OR_EVIDENCE"]::before { width: 0; height: 0; border-left: 0.42em solid transparent;
+  border-right: 0.42em solid transparent; border-bottom: 0.72em solid var(--sodium); }
+
+/* Not-AI label: always visible on evidence views */
+.not-ai { display: inline-flex; align-items: center; padding: 0.22rem 0.55rem 0.18rem; border-radius: 0;
+  border: 1px solid var(--sodium); outline: 1px solid rgba(245, 176, 74, 0.35); outline-offset: 2px; color: var(--sodium);
+  font-family: var(--font-code); font-size: 0.74rem; font-weight: 500; letter-spacing: 0.06em; white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* aria-disabled keeps a control focusable (so focus never vanishes) but it must look inactive. */
+.btn[aria-disabled="true"] { color: var(--foam-faint); border-color: var(--line); background: transparent; cursor: not-allowed; }
+.btn-primary[aria-disabled="true"]::after { display: none; }
+.btn[aria-disabled="true"]:hover { color: var(--foam-faint); border-color: var(--line); background: transparent; }

@@ -1,0 +1,63 @@
+# ANALYST NOTES - NOT OFFICIAL TEXT.
+#
+# Short notes written by Team Twofold on 23 Oct 2026 about sources we could not
+# yet store in full (no redistribution licence, or the site blocks automated
+# download). Each chunk built from a note carries text_origin: analyst_note, and
+# the agents see that label next to the citation. When the primary file is in
+# kb/docs/, build_kb.py indexes the primary text and ALSO keeps the note, so a
+# reviewer can compare our summary with the source.
+#
+# Rule: a note only states what the cited page says, at the strength it says it.
+# Anything we have not checked is written as "not yet checked".
+version: notes-0.1
+written_on: 2026-10-23
+notes:
+  uae-ncsp-v2-2025: |
+    Analyst note, not the official text. The National Cloud Security Policy, Version 2.0, was issued by the UAE Cyber Security Council. The UAE legislation portal lists 17 September 2025 as its issued date.
+    Scope, according to the legislation portal (official summary): the policy addresses cloud consumers that are ministries, federal authorities and non-government critical information infrastructure (CII) entities. Where an emirate has its own CIIP programme, the emirate's lead authority determines how the policy applies to entities in that emirate.
+    Data sovereignty tiers, according to Al Tamimi & Co. (secondary source, law firm article): tier depends on data classification. Baseline tier: the location of data must be known at all stages and the data handled in line with applicable UAE laws. Partial sovereign tier, for confidential or restricted data: data stored strictly within the UAE's geographical boundaries and legal jurisdiction. Sovereign tier, for data above confidential or restricted: exclusive jurisdiction of UAE authorities.
+    Encryption keys, according to Al Tamimi (secondary): across tiers, encryption keys and backups for hosted data are to be generated, stored and managed within the UAE.
+    Not yet checked: clause numbers and exact wording in the primary PDF.
+
+  uae-pdpl-2021: |
+    Analyst note, not the official text. Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data (the PDPL).
+    Scope exclusions, according to Baker McKenzie and Modulos (secondary sources): Article 2 excludes from the law government data and government entities that control or process personal data, among other exclusions. As a result the PDPL's cross-border transfer rules do not, on their own, govern personal data held by a federal authority.
+    Automated decisions, according to Modulos (secondary): the PDPL contains a provision, cited as Article 18, on decisions based solely on automated processing.
+    Not yet checked: both points against the primary text on the UAE legislation portal.
+
+  uae-telecom-law-2003: |
+    Analyst note, not the official text. Federal Law by Decree No. 3 of 2003 regarding the Organization of the Telecommunications Sector, as amended (TDRA is the sector regulator).
+    On 23 October 2026 Team Twofold read Articles 1 to 9 of an English copy hosted on u.ae. Those articles contain no provision on emergency powers, priority restoration of services, or submarine cable repair.
+    The rest of the law has not yet been reviewed, so this note does NOT establish that such powers are absent from the law. A 2026 WAM report refers to an amended federal decree-law that regulates the telecommunications sector, so a newer consolidated text may exist.
+
+  uae-ciip-policy: |
+    Analyst note, not the official text. UAE Critical Information Infrastructure Protection (CIIP) Policy.
+    Section 1.3 lists ten critical sectors, including Information and Communications Technology (telecommunications and satellite) and Government.
+    Sections 2.2 to 2.4 cover risk assessment and sector plans.
+    Not yet located: clauses on resilience, business continuity management and incident reporting.
+
+  uae-cabinet-agentic-2026: |
+    Analyst note. According to the UAE Government Media Office report of the UAE Cabinet meeting on 23 April 2026, the Cabinet approved a framework to move 50% of UAE government sectors and services to agentic AI, for autonomous execution and decision-making, within two years (paraphrased).
+
+  uae-tdra-licence-2026: |
+    Analyst note. WAM (Emirates News Agency), 12 August 2026: the TDRA Board renewed the licences of UAE telecom operators for 20 years. A TDRA official described the renewed licences as reflecting that telecom networks have become critical national infrastructure (paraphrased).
+
+  uae-tdra-gitex-2021: |
+    Analyst note. WAM, 19 October 2021: TDRA presented the readiness of UAE telecom infrastructure at GITEX 2021, including plans for dealing with submarine cable malfunctions. Team Twofold did not find these plans published.
+
+  itu-icpc-iab-2026: |
+    Analyst note, not the official text. ITU press release, 10 July 2026: the International Advisory Body for Submarine Cable Resilience, set up by ITU and the International Cable Protection Committee (ICPC), published reports of its working groups.
+    Priorities named in the press release: coordination between governments and industry; streamlining regulatory and permitting processes for cable deployment and repair; monitoring of risks; route diversity; and preparedness.
+    Not yet checked: the report's own recommendation numbers and wording.
+
+  eu-ai-act-art15: |
+    Analyst note. Regulation (EU) 2024/1689 (the EU AI Act), Article 15, Accuracy, robustness and cybersecurity. EU law; not UAE law.
+    Article 15(4) asks that high-risk AI systems be resilient to errors, faults and inconsistencies, and notes that technical redundancy, including backup or fail-safe plans, can provide robustness (paraphrased).
+
+  us-tsp-47cfr64: |
+    Analyst note. United States Telecommunications Service Priority (TSP) programme, set up under Federal Communications Commission rules. US regulation; not UAE law.
+    According to the FCC: TSP gives national security and emergency preparedness users priority provisioning and restoration of vital voice and data circuits. There are five priority levels, and service providers restore TSP circuits before non-TSP services. The rules are in 47 CFR Part 64, Subpart D, Appendix A.
+
+  canada-dadm-2025: |
+    Analyst note. Treasury Board of Canada Secretariat, Directive on Automated Decision-Making (version of 24 June 2025). Canadian federal policy; not UAE law.
+    Section 6.1 requires an Algorithmic Impact Assessment to be completed and published before an automated decision system goes into production. Systems already in production had until 24 June 2026 to comply.

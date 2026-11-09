@@ -1,0 +1,3 @@
+# Cloudflare Pages rewrites (status 200: the address stays as typed).
+# A replay of a specific bundle uses the replay page shell; the app reads the id from the address.
+/replay/*  /replay.html  200

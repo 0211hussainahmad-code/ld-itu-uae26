@@ -1,0 +1,48 @@
+# Retrieval check (revision-pack target: at least 27 of 30 answered by a top-3 chunk).
+#
+# A question passes when one of the top-3 chunks comes from an expected source
+# AND contains the must_contain text (case-insensitive), if one is given.
+#
+# Honest limitation: these 30 were drafted by the same author as kb/notes.yaml,
+# so word overlap makes them easier than real questions. Before we quote the
+# score, each team member writes 10 more questions WITHOUT looking at the notes
+# (set author: team-blind) and we report both scores separately.
+version: rq-0.1
+questions:
+  # ITU-T Y.3172
+  - {id: Q01, author: claude-draft, q: "What is an ML sandbox meant to prevent in ITU's machine learning architecture for networks?", expect: [itu-t-y3172-2019], must_contain: "designed to prevent"}
+  - {id: Q02, author: claude-draft, q: "Which node in the ML pipeline applies policies to what the model produces?", expect: [itu-t-y3172-2019], must_contain: "application of policies to the output"}
+  - {id: Q03, author: claude-draft, q: "What does the machine learning function orchestrator do?", expect: [itu-t-y3172-2019], must_contain: "orchestrate"}
+  - {id: Q04, author: claude-draft, q: "Which pipeline node sends model output to the sink nodes?", expect: [itu-t-y3172-2019], must_contain: "distributing the output"}
+  - {id: Q05, author: claude-draft, q: "What is the preprocessor node responsible for?", expect: [itu-t-y3172-2019], must_contain: "cleaning data"}
+  - {id: Q06, author: claude-draft, q: "What is a SINK in an ML pipeline?", expect: [itu-t-y3172-2019], must_contain: "target of the ML output"}
+  - {id: Q07, author: claude-draft, q: "What rules can an operator put in place so ML output does not harm a live network?", expect: [itu-t-y3172-2019], must_contain: "safeguard the sanity"}
+  - {id: Q08, author: claude-draft, q: "In Y.3172, what does the keyword 'is required to' mean for conformance?", expect: [itu-t-y3172-2019], must_contain: "strictly followed"}
+  # ITU AI Ready report 2.0
+  - {id: Q09, author: claude-draft, q: "Which fundamental factors did ITU's first AI readiness report identify?", expect: [itu-ai-ready-2-2026], must_contain: "open data"}
+  - {id: Q10, author: claude-draft, q: "How does the AI readiness framework treat digital infrastructure?", expect: [itu-ai-ready-2-2026], must_contain: "digital infrastructure"}
+  - {id: Q11, author: claude-draft, q: "What can a country do with the ITU AI readiness toolkit?", expect: [itu-ai-ready-2-2026], must_contain: "self-evaluate"}
+  - {id: Q12, author: claude-draft, q: "What is the strategy alignment dimension about when adopting AI at large scale?", expect: [itu-ai-ready-2-2026], must_contain: "strategy alignment"}
+  - {id: Q13, author: claude-draft, q: "Is bias measured under the AI for Inclusion dimension?", expect: [itu-ai-ready-2-2026], must_contain: "bias"}
+  - {id: Q14, author: claude-draft, q: "What does the human interface dimension of AI readiness consider?", expect: [itu-ai-ready-2-2026], must_contain: "human interface"}
+  # UAE National Cloud Security Policy
+  - {id: Q15, author: claude-draft, q: "Where must encryption keys for government data hosted in the cloud be managed?", expect: [uae-ncsp-v2-2025], must_contain: "keys"}
+  - {id: Q16, author: claude-draft, q: "Can confidential or restricted government data be kept in a cloud region outside the UAE?", expect: [uae-ncsp-v2-2025], must_contain: "confidential"}
+  - {id: Q17, author: claude-draft, q: "Which organisations does the UAE cloud security policy apply to?", expect: [uae-ncsp-v2-2025], must_contain: "federal authorities"}
+  - {id: Q18, author: claude-draft, q: "Who issued the national cloud policy and on what date?", expect: [uae-ncsp-v2-2025], must_contain: "Cyber Security Council"}
+  # UAE PDPL
+  - {id: Q19, author: claude-draft, q: "Does the federal personal data law cover records held by a federal authority?", expect: [uae-pdpl-2021], must_contain: "government"}
+  - {id: Q20, author: claude-draft, q: "What does UAE data protection law say about decisions made only by automated processing?", expect: [uae-pdpl-2021], must_contain: "automated"}
+  # Telecom law, CIIP, TDRA
+  - {id: Q21, author: claude-draft, q: "Does the UAE telecom sector law give emergency powers to prioritise traffic during an outage?", expect: [uae-telecom-law-2003], must_contain: "emergency"}
+  - {id: Q22, author: claude-draft, q: "Which sectors count as critical information infrastructure in the UAE?", expect: [uae-ciip-policy], must_contain: "critical sectors"}
+  - {id: Q23, author: claude-draft, q: "Is telecommunications treated as critical infrastructure in the UAE?", expect: [uae-ciip-policy, uae-tdra-licence-2026], must_contain: "critical"}
+  - {id: Q24, author: claude-draft, q: "Does the telecom regulator have plans for submarine cable malfunctions?", expect: [uae-tdra-gitex-2021], must_contain: "submarine cable"}
+  - {id: Q25, author: claude-draft, q: "How long are the renewed telecom operator licences?", expect: [uae-tdra-licence-2026], must_contain: "20 years"}
+  # UAE agentic government
+  - {id: Q26, author: claude-draft, q: "What share of government services is the UAE moving to agentic AI, and by when?", expect: [uae-cabinet-agentic-2026], must_contain: "50%"}
+  # Global examples
+  - {id: Q27, author: claude-draft, q: "International recommendations on faster permits for subsea cable repair", expect: [itu-icpc-iab-2026], must_contain: "permitting"}
+  - {id: Q28, author: claude-draft, q: "Which law says robustness of high-risk AI may need backup or fail-safe plans?", expect: [eu-ai-act-art15], must_contain: "fail-safe"}
+  - {id: Q29, author: claude-draft, q: "Example of a national scheme where priority telecom circuits are restored first in an emergency", expect: [us-tsp-47cfr64], must_contain: "restor"}
+  - {id: Q30, author: claude-draft, q: "Which government requires an algorithmic impact assessment before an automated decision system goes live?", expect: [canada-dadm-2025], must_contain: "impact assessment"}

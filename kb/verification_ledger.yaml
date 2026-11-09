@@ -1,0 +1,20 @@
+# Verification ledger: the ONLY way a legal rule counts as verified.
+#
+# A rule in config/rules.yaml is enforced as PROHIBITED only if it says
+#   verification: primary_verified
+#   ledger: <id of an entry below>
+# and that entry is complete:
+#   source_id      same as the rule's source
+#   section        clause / article number as printed in the source
+#   page           PDF page where the quote appears
+#   quote          verbatim text that supports the rule (no paraphrase)
+#   effective      version or effective date of the text checked
+#   applicability  one sentence: to whom / what data / when it applies
+#   exceptions     exceptions or waivers found, or "none found in <sections>"
+#   verified_by    at least TWO different people (team members), by name
+#   verified_on    date
+#   source_sha256  sha256 of the exact file read; must equal the hash that
+#                  kb/fetch_sources.py recorded in kb/build/fetch_manifest.json
+# Claude may draft an entry; only the two humans may add their names.
+version: ledger-0.1
+entries: []

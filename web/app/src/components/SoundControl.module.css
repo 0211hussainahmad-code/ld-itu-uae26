@@ -1,0 +1,17 @@
+.wrap { position: relative; display: inline-flex; align-items: center; gap: 0.4rem; }
+.toggle { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; padding: 0.4rem 0.7rem; border: 1px solid var(--line);
+  border-radius: 2px; background: transparent; color: var(--foam-dim); cursor: pointer; font-size: var(--step--1); }
+.toggle:hover { color: var(--foam); border-color: var(--line-strong); }
+.toggle[aria-pressed="true"] { color: var(--foam); border-color: var(--signal); }
+.icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.wave { animation: pulse 2.6s ease-in-out infinite; transform-origin: 12px 12px; }
+.wave + .wave { animation-delay: 0.4s; }
+@keyframes pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+/* The slider opens under the toggle, so turning sound on never shifts the navigation. */
+.volume { position: absolute; top: calc(100% + 0.35rem); right: 0; display: inline-flex; align-items: center; padding: 0 0.6rem; background: var(--trench); border: 1px solid var(--line-strong); border-radius: 2px; z-index: 30; }
+.volume input { width: 6.5rem; accent-color: var(--signal); height: 44px; }
+@media (max-width: 560px) {
+  .text { display: none; }
+  .toggle { padding-inline: 0.55rem; }
+  .volume input { width: 4.5rem; }
+}

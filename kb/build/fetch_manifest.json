@@ -1,0 +1,35 @@
+{
+ "uae-pdpl-2021": {
+  "id": "uae-pdpl-2021",
+  "url": "https://uaelegislation.gov.ae/en/legislations/1972/download",
+  "file": "uae-pdpl-2021.pdf",
+  "status": "manual_download",
+  "downloaded_by": "team (Twofold)",
+  "downloaded_on": "2026-10-24",
+  "bytes": 194597,
+  "sha256": "d5d5f9e93bd6c0dc2afe79776f3101bcd599e4400a67309bc0b378b2812bcf3a",
+  "checked_at": "2026-10-24T21:26:23+0600"
+ },
+ "uae-ncsp-summary-legportal": {
+  "id": "uae-ncsp-summary-legportal",
+  "url": "https://uaelegislation.gov.ae/en/policy/details/national-cloud-security-policy",
+  "file": "NCSP_official_summary_uaelegislation.md",
+  "status": "manual_download",
+  "downloaded_by": "team (Twofold)",
+  "downloaded_on": "2026-10-24",
+  "bytes": 3377,
+  "sha256": "d66484648af6276e111bb61e032e47664cb1815f5481db251a6147b526098efa",
+  "checked_at": "2026-10-24T21:26:23+0600"
+ },
+ "uae-ncsp-summary-uae": {
+  "id": "uae-ncsp-summary-uae",
+  "url": "https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/policies/cyber-activities/National-Cloud-Security-Policy",
+  "file": "NCSP_official_summary_u.ae.md",
+  "status": "manual_download",
+  "downloaded_by": "team (Twofold)",
+  "downloaded_on": "2026-10-24",
+  "bytes": 6239,
+  "sha256": "080a363483a8900106d678a03e42e0f0914a979265b2e6bf685ba77774180e88",
+  "checked_at": "2026-10-24T21:26:23+0600"
+ }
+}

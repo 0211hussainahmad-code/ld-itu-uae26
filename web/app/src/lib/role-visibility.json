@@ -1,0 +1,11 @@
+{
+  "_comment": "What each `sees` key gives a role, mirroring linkdown/agents.py build_view(). A pytest fails if build_view gains or loses a key without this file changing. `shown` says whether the published audit record contains the data, so the site can show it.",
+  "links": { "label": "International link status (id, label, up or down)", "shown": true },
+  "capacity": { "label": "Total capacity to each cloud region", "shown": false },
+  "traffic": { "label": "Traffic for every demand class", "shown": true },
+  "service": { "label": "Service settings, including its AI endpoint and where case files are stored", "shown": true },
+  "service_traffic": { "label": "Traffic for the government AI service only", "shown": true },
+  "endpoints": { "label": "Available model endpoints", "shown": false },
+  "demand_classes": { "label": "Names of the demand classes (no figures)", "shown": true },
+  "record_sets": { "label": "Case-file record sets and their location", "shown": false }
+}

@@ -1,0 +1,38 @@
+# Public-export CI: offline only, no secrets, and NO upload of run folders.
+# Run folders contain prompts with third-party source text (ITU, UAE); they stay on the runner.
+name: ci
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: bash scripts/get_itu_reference.sh
+      - run: python kb/build_kb.py
+      - run: python kb/eval_retrieval.py
+      - run: python -m pytest -q -rs
+      - run: python scripts/run_exercise.py --test-double
+      - name: Replay the test-double run
+        run: for d in runs/*/; do python scripts/replay.py "$d"; done
+      - name: Four-role E1-E3 offline run (scripted, NOT AI) and its independent verification
+        run: |
+          set -o pipefail
+          python scripts/demonstrate.py | tee /tmp/demo.log
+          RUN_DIR="$(grep -m1 '^RUN_DIR' /tmp/demo.log | awk '{print $2}')"
+          HEAD="$(grep -m1 '^AUDIT_HEAD' /tmp/demo.log | awk '{print $2}')"
+          echo "AUDIT_HEAD $HEAD"
+          python scripts/demonstrate.py --verify "$RUN_DIR" --expected-head "$HEAD"
+      # Deliberately no actions/upload-artifact step.

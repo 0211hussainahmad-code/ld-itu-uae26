@@ -1,0 +1,32 @@
+# Hypothesis register (adjustment #7). These are QUESTIONS, not findings.
+# A gap is published only as a qualified observation, after a human has checked
+# the primary text and searched for counter-examples.
+# Allowed wording: "Publicly available sources reviewed (list, date) did not establish X
+# for scenario Y." Never: "the UAE has no rule on X".
+version: gaps-0.1
+gaps:
+  - id: G1
+    hypothesis: "Government data processed by agentic AI services sits outside the federal PDPL (Art. 2 exclusion); it is unclear which public instrument sets cross-border and human-review safeguards for it."
+    queries: ["government data excluded personal data protection", "cloud data location sovereignty government entities", "human review automated decisions"]
+    global_examples: ["eu-ai-act-art15", "canada-dadm-2025"]
+    status: hypothesis
+  - id: G2
+    hypothesis: "Public sources reviewed did not establish a fail-safe requirement for AI-run government services when international connectivity degrades."
+    queries: ["continuity of service availability resilience cloud", "fail-safe backup plans AI systems", "business continuity critical services"]
+    global_examples: ["eu-ai-act-art15"]
+    status: hypothesis
+  - id: G3
+    hypothesis: "Public sources reviewed did not establish a national priority-restoration scheme for telecommunications services during prolonged outages."
+    queries: ["priority restoration telecommunications emergency", "critical sectors ICT government emergency services", "national priority order capacity"]
+    global_examples: ["us-tsp-47cfr64", "itu-icpc-iab-2026"]
+    status: hypothesis
+  - id: G4
+    hypothesis: "Public sources reviewed did not establish a cross-border arrangement for timely subsea cable repair permits affecting UAE connectivity."
+    queries: ["submarine cable repair permit", "streamlining permitting repair vessels", "cable protection international cooperation"]
+    global_examples: ["itu-icpc-iab-2026"]
+    status: hypothesis
+  - id: G5
+    hypothesis: "Coordination between the telecom regulator, government-service owners and the cloud-security authority during a connectivity crisis is not described in public sources reviewed."
+    queries: ["coordination between government and industry resilience", "information sharing cybersecurity incidents", "critical information infrastructure sector regulator"]
+    global_examples: ["itu-icpc-iab-2026"]
+    status: hypothesis

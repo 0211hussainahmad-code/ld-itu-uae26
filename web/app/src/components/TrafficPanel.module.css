@@ -1,0 +1,22 @@
+.wrap { padding: 1rem 0 0; }
+.head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.3rem 1rem; margin-bottom: 0.6rem; }
+.h3 { font-size: var(--step--1); font-weight: 600; color: var(--foam-dim); }
+.source { margin: 0; font-size: var(--step--2); color: var(--foam-faint); }
+.empty { color: var(--foam-dim); font-size: var(--step--1); margin: 0; }
+.rows { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 0.4rem 2rem; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "label health" "meter meter" "value value"; gap: 0.2rem 0.6rem;
+  padding: 0.45rem 0; border-bottom: 1px solid var(--line); font-size: var(--step--1); }
+.label { grid-area: label; }
+.health { grid-area: health; font-size: var(--step--2); font-weight: 600; }
+.health::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 0.35rem; border-radius: 50%; vertical-align: 0.1em; }
+.row[data-health="OK"] .health { color: var(--kelp); }
+.row[data-health="OK"] .health::before { background: var(--kelp); }
+.row[data-health="DEGRADED"] .health { color: var(--sodium); }
+.row[data-health="DEGRADED"] .health::before { background: var(--sodium); border-radius: 0; transform: rotate(45deg); }
+.row[data-health="DOWN"] .health { color: var(--flare); }
+.row[data-health="DOWN"] .health::before { background: var(--flare); border-radius: 0; }
+.meter { grid-area: meter; height: 4px; border-radius: 2px; background: rgba(22, 54, 94, 0.6); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--kelp); transition: width 500ms var(--ease-out); }
+.row[data-health="DEGRADED"] .meter i { background: var(--sodium); }
+.row[data-health="DOWN"] .meter i { background: var(--flare); }
+.value { grid-area: value; color: var(--foam-dim); font-size: var(--step--2); }

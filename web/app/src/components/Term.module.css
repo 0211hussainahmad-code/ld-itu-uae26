@@ -1,0 +1,10 @@
+.wrap { position: relative; display: inline; }
+.term { all: unset; cursor: help; border-bottom: 1px dashed var(--foam-faint); color: inherit; }
+.term:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: 2px; }
+.tip { position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translate(-50%, 4px); width: max-content; max-width: min(19rem, 80vw);
+  padding: 0.6rem 0.8rem; background: var(--glass); border: 1px solid var(--line-strong); border-radius: 8px; backdrop-filter: blur(10px);
+  font-size: var(--step--1); font-weight: 400; line-height: 1.45; color: var(--foam); text-align: left; z-index: 30;
+  opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 140ms ease, transform 140ms ease; box-shadow: 0 14px 34px -16px #000; }
+.tip[data-open] { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+/* A closed tip takes no layout, so it can never widen the page near the right edge on small screens. */
+.tip:not([data-open]) { display: none; }

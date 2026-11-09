@@ -1,0 +1,39 @@
+.bar { position: sticky; bottom: 0; z-index: 15; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 1.2rem;
+  padding: 0.75rem var(--gutter) 0.85rem; background: rgba(4, 16, 38, 0.94); backdrop-filter: blur(14px); border-top: 1px solid var(--line-strong); }
+.controls { display: flex; align-items: center; gap: 0.35rem; }
+.controls svg { width: 18px; height: 18px; fill: currentColor; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.controls button[disabled] { opacity: 0.35; cursor: default; }
+.play { width: 52px; height: 52px; border-color: var(--signal); color: var(--signal-hot); }
+.speed select { min-height: 44px; margin-left: 0.4rem; padding: 0 0.6rem; border-radius: 2px; border: 1px solid var(--line-strong);
+  background: var(--trench); color: var(--foam); font-family: var(--font-code); }
+.trackWrap { position: relative; padding-top: 2rem; }
+.events { position: absolute; inset: 0 0 auto 0; height: 1.5rem; }
+.eventBtn { position: absolute; top: 0; transform: translateX(-2px); background: none; border: 0; padding: 0 0.3rem 0 0.4rem; cursor: pointer;
+  color: var(--foam-dim); font-size: var(--step--2); font-family: var(--font-code); border-left: 2px solid var(--foam); min-height: 30px; }
+.eventBtn:hover, .eventBtn[data-active] { color: var(--foam); }
+.track { position: relative; height: 22px; border-radius: 4px; background: rgba(22, 54, 94, 0.35); overflow: hidden; }
+.track i { position: absolute; top: 5px; width: 2px; height: 12px; margin-left: -1px; background: var(--shelf-light); opacity: 0.7; }
+.track i[data-k="EVENT"] { background: var(--foam); top: 2px; height: 18px; opacity: 1; width: 3px; }
+.track i[data-k="GATE_DECISION"] { background: var(--signal); }
+.track i[data-k="HUMAN_DECISION"] { background: var(--sodium); height: 16px; top: 3px; }
+.track i[data-k="STATE_CHANGE"] { background: var(--kelp); height: 18px; top: 2px; }
+.track i[data-past] { opacity: 1; }
+.fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, rgba(95, 230, 244, 0.05), rgba(95, 230, 244, 0.18));
+  border-right: 2px solid var(--signal); transition: width 260ms var(--ease-out); pointer-events: none; }
+.range { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 22px; margin: 0; opacity: 0; cursor: pointer; }
+.range:focus-visible + .x, .trackWrap:focus-within .track { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+.readout { margin: 0; display: grid; justify-items: end; gap: 0.05rem; font-size: var(--step--1); color: var(--foam-dim); min-width: 9rem; }
+.readout code { color: var(--signal); font-size: var(--step-0); }
+.keys { color: var(--foam-faint); font-size: var(--step--2); }
+
+@media (max-width: 760px) {
+  .bar { grid-template-columns: minmax(0, 1fr) auto; gap: 0.4rem 0.6rem; padding: 0.4rem var(--gutter) 0.5rem; }
+  .trackWrap { grid-column: 1 / -1; order: 1; padding-top: 1.4rem; }
+  .controls { order: 2; gap: 0.15rem; }
+  .controls :global(.icon-btn) { width: 40px; height: 40px; }
+  .play { width: 44px !important; height: 44px !important; }
+  .speed select { min-height: 40px; margin-left: 0.15rem; }
+  .readout { order: 3; min-width: 0; }
+  .readout span { display: none; }
+}
+@media (max-width: 440px) { .readout { display: none; } .bar { grid-template-columns: 1fr; } .controls { justify-content: space-between; } }

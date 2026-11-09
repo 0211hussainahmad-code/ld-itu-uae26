@@ -1,0 +1,24 @@
+.wrap { max-width: 40rem; margin: clamp(4rem, 14vh, 9rem) auto; padding: 0 var(--gutter); text-align: center; display: grid; justify-items: center; gap: 0.4rem; }
+.title { font-family: var(--font-display); font-size: var(--step-3); font-weight: 400; margin-bottom: 0.4rem; }
+.text { color: var(--foam-dim); }
+.lede { font-size: var(--step-1); color: var(--foam); }
+.bar { width: min(22rem, 80%); height: 3px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: 0.6rem; }
+.bar i { display: block; height: 100%; background: var(--signal); transition: width 120ms linear; }
+.sonar { position: relative; width: 64px; height: 64px; margin-bottom: 1rem; }
+.sonar span { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--signal); opacity: 0; animation: ping 2.4s var(--ease-out) infinite; }
+.sonar span:nth-child(2) { animation-delay: 0.8s; } .sonar span:nth-child(3) { animation-delay: 1.6s; }
+@keyframes ping { 0% { transform: scale(0.2); opacity: 0.9; } 100% { transform: scale(1); opacity: 0; } }
+.refused { text-align: left; justify-items: start; max-width: 52rem; margin-left: var(--gutter); }
+.refused .title { font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 300; }
+.status { font-family: var(--font-code); font-size: var(--step--1); color: var(--flare); border: 1px solid var(--flare); padding: 0.2rem 0.55rem; margin-bottom: 1rem; }
+.brokenSeal { display: none; }
+.status[data-kind="not-found"] { color: var(--sodium); border-color: var(--sodium); }
+.exits { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1rem; }
+.brokenLink { width: min(22rem, 80%); height: auto; margin-bottom: 1.4rem; overflow: visible; }
+.brokenLink .cable { fill: none; stroke: var(--cable-lit); stroke-width: 3; stroke-linecap: round; }
+.brokenLink .cable + .cable { stroke: var(--foam-faint); stroke-dasharray: 6 7; }
+.brokenLink .cut { stroke: var(--flare); stroke-width: 2.5; stroke-linecap: round; }
+.brokenLink .spark { fill: none; stroke: var(--flare); stroke-width: 1.5; opacity: 0.6; animation: ping 2.4s var(--ease-out) infinite; transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: reduce) { .brokenLink .spark { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .sonar span { animation: none; opacity: 0.5; } }
+.title { text-wrap: balance; }

@@ -1,0 +1,45 @@
+# LinkDown synthetic topology (exercise model, NOT a map of real traffic).
+#
+# What is real:   place names that are public facts (Fujairah hosts the landing of most
+#                 UAE-landing subsea systems; westbound systems transit the Red Sea).
+# What is SYNTHETIC: every capacity, latency, demand and region below. Units are
+#                 abstract "capacity units" (cu) and milliseconds chosen for teaching,
+#                 not measured from any operator. Do not cite these numbers as facts.
+synthetic: true
+version: topo-0.1
+
+nodes:
+  uae_core:      {label: "UAE national core (aggregate)", kind: domestic}
+  fujairah_cls:  {label: "Fujairah cable landing (aggregate)", kind: landing}
+  gulf_land:     {label: "Terrestrial route via a neighbouring state (synthetic)", kind: transit}
+  uae_central:   {label: "Cloud region UAE-Central (synthetic)", kind: region, in_uae: true}
+  eu_west:       {label: "Cloud region EU-West (synthetic)", kind: region, in_uae: false}
+  asia_south:    {label: "Cloud region Asia-South (synthetic)", kind: region, in_uae: false}
+
+# Links are bidirectional. "group" lets an event fail several links at once.
+links:
+  - {id: D1, a: uae_core,     b: uae_central,  cap: 200, ms: 1,   group: domestic,  label: "Domestic backbone"}
+  - {id: L1, a: uae_core,     b: fujairah_cls, cap: 140, ms: 2,   group: domestic,  label: "Core to landing station"}
+  - {id: W1, a: fujairah_cls, b: eu_west,      cap: 30,  ms: 62,  group: westbound, label: "Westbound system 1 (Red Sea route)"}
+  - {id: W2, a: fujairah_cls, b: eu_west,      cap: 30,  ms: 66,  group: westbound, label: "Westbound system 2 (Red Sea route)"}
+  - {id: W3, a: fujairah_cls, b: eu_west,      cap: 20,  ms: 74,  group: westbound, label: "Westbound system 3 (Red Sea route)"}
+  - {id: E1, a: fujairah_cls, b: asia_south,   cap: 40,  ms: 34,  group: eastbound, label: "Eastbound system 1"}
+  - {id: E2, a: fujairah_cls, b: asia_south,   cap: 30,  ms: 38,  group: eastbound, label: "Eastbound system 2"}
+  - {id: X1, a: asia_south,   b: eu_west,      cap: 18,  ms: 120, group: longhaul,  label: "Asia to Europe long-haul (non-Red Sea)"}
+  - {id: T1, a: uae_core,     b: gulf_land,    cap: 12,  ms: 6,   group: terrestrial, label: "Terrestrial to neighbour"}
+  - {id: T2, a: gulf_land,    b: eu_west,      cap: 12,  ms: 78,  group: terrestrial, label: "Neighbour onward to Europe"}
+
+# Demand classes: who needs how much capacity to which region (synthetic).
+# priority is only used when an APPROVED priority plan exists; default is fair share.
+demand:
+  - {id: hospitals,  label: "Hospital tele-consultation",   dest: eu_west,     cu: 6}
+  - {id: emergency,  label: "Emergency-service data links", dest: eu_west,     cu: 4}
+  - {id: gov_ai,     label: "Government service AI calls",  dest: eu_west,     cu: 10}
+  - {id: business,   label: "Business and consumer",        dest: eu_west,     cu: 60}
+  - {id: asia_mix,   label: "Asia-bound traffic",           dest: asia_south,  cu: 30}
+  - {id: domestic,   label: "Domestic traffic",             dest: uae_central, cu: 50}
+
+# Health thresholds for any demand class (exercise rule, synthetic).
+health:
+  ok:       {min_delivered: 0.95, max_ms: 150}
+  degraded: {min_delivered: 0.60}
